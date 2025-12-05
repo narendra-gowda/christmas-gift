@@ -65,8 +65,8 @@ export default function FlipCard() {
             className="absolute inset-0 flex flex-col items-center justify-center bg-white rounded-xl shadow-xl text-lg font-bold px-4"
             style={{ backfaceVisibility: "hidden" }}
           >
-            🎄 Happy Holidays!
-            <span className="text-base mt-2">We’re going to a concert 🎶</span>
+            Surprise!!
+            <span className="text-base mt-10">We’re going to a concert 🎶</span>
           </div>
 
           {/* BACK */}
