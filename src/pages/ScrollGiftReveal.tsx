@@ -3,7 +3,7 @@ import { useRef } from "react";
 import boxClosed from "../assets/box-closed.png";
 import boxOpen from "../assets/box-open.png";
 import boxFullOpen from "../assets/box-full-opened.png";
-import ticket from "../assets/ticket.png";
+import FlipCard from "./FlipCard";
 
 export default function ScrollGiftReveal() {
   const ref = useRef(null);
@@ -15,7 +15,7 @@ export default function ScrollGiftReveal() {
   });
 
   // Box shake (0–10% scroll)
-  const shake = useTransform(scrollYProgress, [0, 0.1], [-5, 5]);
+  const shake = useTransform(scrollYProgress, [0, 0.1], [-5, -5]);
 
   // Box opens (10–40% scroll)
   const openProgress = useTransform(
@@ -48,7 +48,7 @@ export default function ScrollGiftReveal() {
       <div className="sticky top-0 h-screen flex items-center justify-center">
         <div className="relative w-64 h-64 flex items-center justify-center">
           {/* Ticket */}
-          <motion.img
+          {/* <motion.img
             src={ticket}
             alt="ticket"
             className="absolute z-20"
@@ -57,6 +57,20 @@ export default function ScrollGiftReveal() {
               x: ticketX,
               opacity: ticketOpacity,
               scale: ticketScale,
+            }}
+          /> */}
+
+          <motion.div
+            className="absolute z-20"
+            children={<FlipCard />}
+            style={{
+              color: "black",
+              borderRadius: 5,
+              y: ticketY,
+              x: ticketX,
+              opacity: ticketOpacity,
+              scale: ticketScale,
+              textAlign: "center",
             }}
           />
 

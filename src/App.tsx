@@ -1,9 +1,9 @@
-import { useState } from "react";
+// import { useState } from "react";
 import "./App.css";
 import ScrollGiftReveal from "./pages/ScrollGiftReveal";
 
 function App() {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
   return (
     //     <div className="items-center justify-center p-4  overflow-hidden">
@@ -112,6 +112,7 @@ function App() {
     // `}</style>
     //     </div>
     <ScrollGiftReveal />
+    // <ScrollToFlip />
   );
 }
 
