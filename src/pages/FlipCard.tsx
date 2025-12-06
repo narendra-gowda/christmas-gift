@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValueEvent,
+} from "framer-motion";
 import ticket from "../assets/ticket.png";
 import confetti from "canvas-confetti";
 
 export default function FlipCard() {
   const [flipped, setFlipped] = useState(false);
+  const [isFullView, setIsFullView] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   // swipe detection threshold
@@ -36,6 +42,16 @@ export default function FlipCard() {
     }
   };
 
+  const { scrollYProgress } = useScroll();
+
+  useMotionValueEvent(scrollYProgress, "change", (value) => {
+    if (value >= 1.0) {
+      setIsFullView(true);
+    } else {
+      setIsFullView(false);
+    }
+  });
+
   return (
     <div className="flex items-center justify-center">
       <audio ref={audioRef} src="/the-holiday-theme.mp3" preload="auto" />
@@ -47,10 +63,9 @@ export default function FlipCard() {
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.6}
           onDragEnd={(_e, info) => {
-            if (info.offset.x > swipeConfidence) setFlipped(true); // swipe right
-            if (info.offset.x < -swipeConfidence) setFlipped(true); // swipe left
+            if (info.offset.x > swipeConfidence) isFullView && setFlipped(true); // swipe right
+            if (info.offset.x < -swipeConfidence) setFlipped(false); // swipe left
           }}
-          onTap={() => setFlipped(!flipped)}
         />
 
         {/* Flipping Card */}
@@ -60,19 +75,11 @@ export default function FlipCard() {
           animate={{ rotateY: flipped ? 180 : 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
         >
-          {/* FRONT */}
-          {/* <div
-            className="absolute inset-0 flex flex-col items-center justify-center bg-white rounded-xl shadow-xl text-lg font-bold px-4"
-            style={{ backfaceVisibility: "hidden" }}
-          >
-            <span className="text-base">You, me, and a night of music 🎶</span>
-            <span className="text-base mt-10">Can you guess where?</span>
-          </div> */}
           <motion.div
-            className={`w-full h-full rounded-2xl shadow-2xl bg-[linear-gradient(135deg,#b9935a,#f5ecd7,#d4af37,#a67834,#f5ecd7,#b9935a)] text-center p-6 flex flex-col items-center justify-center absolute backface-hidden`}
+            className={`w-full h-full rounded-2xl shadow-2xl bg-[linear-gradient(135deg,#b9935a,#f5ecd7,#d4af37,#a67834,#f5ecd7,#b9935a)] text-center p-4 flex flex-col items-center justify-center absolute backface-hidden`}
           >
             <motion.div
-              className="text-xl font-bold text-amber-800"
+              className="text-xl font-bold text-amber-900"
               initial={{ y: -10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}
@@ -81,13 +88,20 @@ export default function FlipCard() {
             </motion.div>
             {/* Small musical notes */}
             <motion.div
-              className="mt-4 text-2xl text-yellow-400"
+              className="mt-4 text-2xl"
               animate={{ y: [0, -5, 0] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
             >
               🎵 🎶 🎼
             </motion.div>
-            <span className="text-base mt-10">Can you guess where? 😁</span>
+            <span className="text-base m-10">
+              Can you guess where? {isFullView}
+            </span>
+            {isFullView ? (
+              <span className="text-xs absolute bottom-5">
+                flip to find out!
+              </span>
+            ) : null}
           </motion.div>
 
           {/* BACK */}
@@ -99,7 +113,7 @@ export default function FlipCard() {
             }}
           >
             <img
-              src={ticket} // <- your ticket image here
+              src={ticket}
               alt="Concert Ticket"
               className="w-full h-full object-cover"
             />
