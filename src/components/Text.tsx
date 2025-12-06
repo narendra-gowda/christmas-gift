@@ -6,10 +6,10 @@ export const Text: FC<{ text: string }> = ({ text }) => {
 
   // When scrollYProgress goes from 0 to 0.05, opacity goes 1 → 0
   const hintOpacity = useTransform(scrollYProgress, [0, 0.03], [2, -1]);
-  const progressY = useTransform(scrollYProgress, [0, 0.04], [50, -40]);
+  const progressY = useTransform(scrollYProgress, [0, 0.04], [70, -40]);
   return (
     <motion.div
-      className=" text-center text-white text-3xl font-bold"
+      className=" text-center font-bold text-4xl text-zinc-100"
       animate={
         {
           // y: [0, -20, 0], // floating motion
@@ -21,7 +21,11 @@ export const Text: FC<{ text: string }> = ({ text }) => {
         repeat: Infinity,
         ease: "easeInOut",
       }}
-      style={{ opacity: hintOpacity, y: progressY }}
+      style={{
+        opacity: hintOpacity,
+        y: progressY,
+        fontFamily: "sans-serif",
+      }}
     >
       {text}
     </motion.div>
