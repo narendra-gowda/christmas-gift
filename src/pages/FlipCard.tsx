@@ -1,14 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValueEvent,
-} from "framer-motion";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import ticket from "../assets/ticket.png";
 import confetti from "canvas-confetti";
 
-export default function FlipCard() {
+export default function FlipCard({ onFlip }: any) {
   const [flipped, setFlipped] = useState(false);
   const [isFullView, setIsFullView] = useState(false);
 
@@ -20,6 +15,7 @@ export default function FlipCard() {
     if (flipped) {
       launchConfetti();
       playMusic();
+      onFlip(flipped);
     }
   }, [flipped]);
 
@@ -45,7 +41,7 @@ export default function FlipCard() {
   const { scrollYProgress } = useScroll();
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
-    if (value >= 1.0) {
+    if (value >= 0.95) {
       setIsFullView(true);
     } else {
       setIsFullView(false);

@@ -7,8 +7,12 @@ import FlipCard from "./FlipCard";
 import SwipeHint from "../components/SwipeHint";
 import { Text } from "../components/Text";
 
-export default function ScrollGiftReveal() {
+export default function ScrollGiftReveal({ onFlip }: any) {
   const ref = useRef(null);
+
+  const getIsFlipped = (value: boolean) => {
+    onFlip(value);
+  };
 
   // Scroll progress across the entire section
   const { scrollYProgress } = useScroll({
@@ -46,7 +50,7 @@ export default function ScrollGiftReveal() {
   const ticketOpacity = useTransform(scrollYProgress, [0.3, 0.35], [-1, 1]);
 
   // Ticket grows fullscreen (70–100% scroll)
-  const ticketScale = useTransform(scrollYProgress, [0.63, 1], [0.1, 2.1]);
+  const ticketScale = useTransform(scrollYProgress, [0.63, 0.8], [0.1, 1.2]);
 
   return (
     <div ref={ref} className="h-[400vh]">
@@ -86,7 +90,7 @@ export default function ScrollGiftReveal() {
 
           <motion.div
             className="absolute z-20"
-            children={<FlipCard />}
+            children={<FlipCard onFlip={getIsFlipped} />}
             style={{
               color: "black",
               borderRadius: 5,
