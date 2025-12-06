@@ -4,6 +4,8 @@ import boxClosed from "../assets/box-closed.png";
 import boxOpen from "../assets/box-open.png";
 import boxFullOpen from "../assets/box-full-opened.png";
 import FlipCard from "./FlipCard";
+import SwipeHint from "../components/SwipeHint";
+import { Text } from "../components/Text";
 
 export default function ScrollGiftReveal() {
   const ref = useRef(null);
@@ -39,17 +41,17 @@ export default function ScrollGiftReveal() {
   const ticketX = useTransform(
     scrollYProgress,
     [0.4, 0.4, 0.6],
-    [-50, -50, -30]
+    [-50, -50, -40]
   );
   const ticketOpacity = useTransform(scrollYProgress, [0.3, 0.35], [-1, 1]);
 
   // Ticket grows fullscreen (70–100% scroll)
-  const ticketScale = useTransform(scrollYProgress, [0.63, 1], [0.1, 3.5]);
+  const ticketScale = useTransform(scrollYProgress, [0.63, 1], [0.1, 2.1]);
 
   return (
-    <div ref={ref} className="h-[300vh]">
+    <div ref={ref} className="h-[400vh]">
       {/* Sticky container */}
-      <div className="sticky top-0 h-screen w-screen flex items-center justify-center">
+      <div className="sticky top-0 h-screen flex items-center flex-col justify-center">
         {/* Snow effect */}
         <div className="pointer-events-none absolute inset-0">
           {Array.from({ length: 60 }).map((_, i) => (
@@ -66,8 +68,9 @@ export default function ScrollGiftReveal() {
               }}
             ></div>
           ))}
+          <Text text="To my Han ♥️" />
         </div>
-        <div className="relative w-64 h-64 flex items-center justify-center">
+        <div className="relative w-64 h-64 flex items-center justify-center ml-20">
           {/* Ticket */}
           {/* <motion.img
             src={ticket}
@@ -91,7 +94,6 @@ export default function ScrollGiftReveal() {
               x: ticketX,
               opacity: ticketOpacity,
               scale: ticketScale,
-              textAlign: "center",
             }}
           />
 
@@ -106,7 +108,7 @@ export default function ScrollGiftReveal() {
               height: "130px",
               marginRight: 108,
               marginBottom: 11,
-              rotateZ: -5,
+              rotateZ: 5,
               opacity: useTransform(scrollYProgress, [0.2, 0.26], [4, 0]), // fade away when opening
             }}
           />
@@ -134,6 +136,7 @@ export default function ScrollGiftReveal() {
             }}
           />
         </div>
+        <SwipeHint />
       </div>
       <style>{`
     @keyframes fall {

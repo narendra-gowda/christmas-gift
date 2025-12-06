@@ -55,19 +55,40 @@ export default function FlipCard() {
 
         {/* Flipping Card */}
         <motion.div
-          className="w-full h-full"
+          className="w-full h-full "
           style={{ transformStyle: "preserve-3d" }}
           animate={{ rotateY: flipped ? 180 : 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
         >
           {/* FRONT */}
-          <div
+          {/* <div
             className="absolute inset-0 flex flex-col items-center justify-center bg-white rounded-xl shadow-xl text-lg font-bold px-4"
             style={{ backfaceVisibility: "hidden" }}
           >
-            Surprise!!
-            <span className="text-base mt-10">We’re going to a concert 🎶</span>
-          </div>
+            <span className="text-base">You, me, and a night of music 🎶</span>
+            <span className="text-base mt-10">Can you guess where?</span>
+          </div> */}
+          <motion.div
+            className={`w-full h-full rounded-2xl shadow-2xl bg-[linear-gradient(135deg,#b9935a,#f5ecd7,#d4af37,#a67834,#f5ecd7,#b9935a)] text-center p-6 flex flex-col items-center justify-center absolute backface-hidden`}
+          >
+            <motion.div
+              className="text-xl font-bold text-amber-800"
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              You, me, and a night of music
+            </motion.div>
+            {/* Small musical notes */}
+            <motion.div
+              className="mt-4 text-2xl text-yellow-400"
+              animate={{ y: [0, -5, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              🎵 🎶 🎼
+            </motion.div>
+            <span className="text-base mt-10">Can you guess where? 😁</span>
+          </motion.div>
 
           {/* BACK */}
           <div
