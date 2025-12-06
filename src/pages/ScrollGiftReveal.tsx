@@ -72,7 +72,7 @@ export default function ScrollGiftReveal({ onFlip }: any) {
               }}
             ></div>
           ))}
-          <Text text="For Han ♥️" />
+          <Text text="Just for you Han 🤍" />
         </div>
         <div className="relative w-64 h-64 flex items-center justify-center ml-20">
           {/* Ticket */}

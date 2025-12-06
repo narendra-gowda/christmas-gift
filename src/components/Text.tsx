@@ -9,7 +9,7 @@ export const Text: FC<{ text: string }> = ({ text }) => {
   const progressY = useTransform(scrollYProgress, [0, 0.04], [70, -40]);
   return (
     <motion.div
-      className=" text-center font-bold text-4xl text-zinc-100"
+      className=" text-center text-3xl text-zinc-200"
       animate={
         {
           // y: [0, -20, 0], // floating motion
@@ -24,7 +24,7 @@ export const Text: FC<{ text: string }> = ({ text }) => {
       style={{
         opacity: hintOpacity,
         y: progressY,
-        fontFamily: "sans-serif",
+        fontFamily: "ui-sans-serif",
       }}
     >
       {text}
