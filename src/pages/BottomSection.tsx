@@ -15,14 +15,14 @@ const Schedule = () => {
       id="launch-schedule"
       className="mx-auto max-w-5xl py-17 text-white"
     >
-      <motion.h1
+      <motion.h2
         initial={{ y: 48, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.75 }}
         className="mb-20 text-4xl font-black uppercase text-zinc-50 px-4"
       >
         Details
-      </motion.h1>
+      </motion.h2>
       <ScheduleItem title="Event" location="The Holiday in concert" />
       <ScheduleItem title="Venue" location="Bradford Live" />
       <ScheduleItem title="Date" location="19th Dec" />
