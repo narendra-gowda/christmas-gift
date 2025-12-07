@@ -48,6 +48,8 @@ export default function FlipCard({ onFlip }: any) {
     }
   });
 
+  const notes = ["🎵", "🎶", "🎼"];
+
   return (
     <div className="flex items-center justify-center">
       <audio ref={audioRef} src="/the-holiday-theme.mp3" preload="auto" />
@@ -83,13 +85,22 @@ export default function FlipCard({ onFlip }: any) {
               You, me, and a night of music
             </motion.div>
             {/* Small musical notes */}
-            <motion.div
-              className="mt-4 text-2xl"
-              animate={{ y: [0, -5, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-            >
-              🎵 🎶 🎼
-            </motion.div>
+            <div className="flex gap-2 mt-4 text-xl justify-center">
+              {notes.map((note, i) => (
+                <motion.div
+                  key={i}
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 0.9,
+                    ease: "easeInOut",
+                    delay: i * 0.5, // ← stagger wave effect
+                  }}
+                >
+                  {note}
+                </motion.div>
+              ))}
+            </div>
             <span className="text-base m-10">
               Can you guess where? {isFullView}
             </span>

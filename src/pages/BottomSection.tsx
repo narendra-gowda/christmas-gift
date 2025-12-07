@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { FiMapPin } from "react-icons/fi";
 
 export const SmoothScrollHero = () => {
   return (
@@ -18,29 +19,36 @@ const Schedule = () => {
         initial={{ y: 88, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.75 }}
-        className="mb-20 text-4xl font-black uppercase text-zinc-50 px-4"
+        className="mb-19 text-4xl font-black uppercase text-zinc-50 px-4"
       >
         Details
       </motion.h2>
-      <ScheduleItem title="Event" location="The Holiday in concert" />
-      <ScheduleItem title="Venue" location="Bradford Live" />
-      <ScheduleItem title="Date" location="19th Dec" />
-      <ScheduleItem title="Time" location="7:30 pm" />
+      <ScheduleItem title="Event" details="The Holiday in concert" />
+      <ScheduleItem
+        title="Venue"
+        location="Bradford Live"
+        link="https://maps.app.goo.gl/not7iqLpZ8itomPM9"
+      />
+      <ScheduleItem title="Date" details="19th Dec" />
+      <ScheduleItem title="Time" details="7:30 pm" />
       <ScheduleItem
         title="Event Link"
+        details="Event page"
         link="https://trafalgartickets.com/bradford-live-bradford/en-GB/event/film/the-holiday-in-concert-film-with-live-orchestra-tickets"
       />
-      <LastItem text="Hope you liked it!" />
+      <LastItem text="Hope you liked it :)" />
     </section>
   );
 };
 
 const ScheduleItem = ({
   title,
+  details,
   location,
   link,
 }: {
   title: string;
+  details?: string;
   location?: string;
   link?: string;
 }) => {
@@ -49,7 +57,7 @@ const ScheduleItem = ({
       initial={{ y: 88, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ ease: "easeInOut", duration: 0.75 }}
-      className="mb-9 flex items-center justify-between border-b border-zinc-500 px-4 pb-9"
+      className="mb-8 flex items-center justify-between border-b border-zinc-500 px-4 pb-8"
     >
       <div>
         <p className="mb-1.5 text-xl text-zinc-50">{title}</p>
@@ -57,10 +65,13 @@ const ScheduleItem = ({
       <div className="flex items-center gap-1.5 text-end text-sm uppercase text-zinc-500">
         {link ? (
           <a href={link} target="_blank">
-            Click here to open
+            <div className="flex flex-row gap-2">
+              {location && <FiMapPin style={{ marginTop: 3 }} />}
+              {location ?? details}
+            </div>
           </a>
         ) : (
-          <p>{location}</p>
+          <p>{details}</p>
         )}
       </div>
     </motion.div>
@@ -73,7 +84,7 @@ const LastItem = ({ text }: { text: string }) => {
       initial={{ y: 88, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ ease: "easeInOut", duration: 0.75 }}
-      className="mt-20 flex items-center justify-center px-4"
+      className="mt-15 flex items-center justify-center px-4"
     >
       <div className="text-center text-zinc-400">{text}</div>
     </motion.div>
