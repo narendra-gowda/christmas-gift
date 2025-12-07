@@ -1,30 +1,18 @@
-import {
-  motion,
-  useMotionValueEvent,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
 
 export default function SwipeHint() {
   const { scrollYProgress } = useScroll();
   const [showKeepScrolling, setShowKeepScrolling] = useState(true);
-
-  // When scrollYProgress goes from 0 to 0.05, opacity goes 1 → 0
-  const hintOpacity = useTransform(scrollYProgress, [0, 1.3], [6, -2]);
+  const [showHint, setShowHint] = useState(true);
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
-    console.log(value);
-    if (value <= 0.25) {
-      setShowKeepScrolling(true);
-    } else {
-      setShowKeepScrolling(false);
-    }
+    setShowKeepScrolling(value <= 0.4);
+    setShowHint(!(value >= 0.95));
   });
 
-  return (
+  return showHint ? (
     <motion.div
-      style={{ opacity: hintOpacity }}
       className="absolute bottom-15"
       animate={{
         y: [0, -30, 0],
@@ -35,9 +23,9 @@ export default function SwipeHint() {
         ease: "easeInOut",
       }}
     >
-      <p className="text-white text-lg">
-        {showKeepScrolling ? "Scroll up to open" : "Keep scrolling up"}
+      <p className="text-white text-md">
+        {showKeepScrolling ? "Scroll down to open" : "Keep scrolling down"}
       </p>
     </motion.div>
-  );
+  ) : null;
 }

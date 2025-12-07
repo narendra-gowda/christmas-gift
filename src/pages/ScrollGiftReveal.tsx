@@ -1,18 +1,21 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { useRef, useState } from "react";
 import boxClosed from "../assets/box-closed.png";
 import boxOpen from "../assets/box-open.png";
 import boxFullOpen from "../assets/box-full-opened.png";
 import FlipCard from "./FlipCard";
 import SwipeHint from "../components/SwipeHint";
-import { Text } from "../components/Text";
+import { SnowFall } from "../components/SnowFall";
+import { Stars } from "../components/Stars";
 
 export default function ScrollGiftReveal({ onFlip }: any) {
   const ref = useRef(null);
-
-  const getIsFlipped = (value: boolean) => {
-    onFlip(value);
-  };
+  const [enableSnow, setEnableSnow] = useState(false);
 
   // Scroll progress across the entire section
   const { scrollYProgress } = useScroll({
@@ -20,10 +23,17 @@ export default function ScrollGiftReveal({ onFlip }: any) {
     offset: ["start end", "end start"],
   });
 
+  const getIsFlipped = (value: boolean) => {
+    onFlip(value);
+  };
+
+  useMotionValueEvent(scrollYProgress, "change", (value) => {
+    setEnableSnow(value >= 0.2);
+  });
+
   // Box shake (0–10% scroll)
   const shake = useTransform(scrollYProgress, [0, 0.1], [-5, -5]);
 
-  // Box opens (10–40% scroll)
   const openProgress = useTransform(
     scrollYProgress,
     [0.23, 0.27, 0.3],
@@ -36,11 +46,11 @@ export default function ScrollGiftReveal({ onFlip }: any) {
     [-1, 2.5]
   );
 
-  // Ticket rises (40–70% scroll)
+  // Ticket animation
   const ticketY = useTransform(
     scrollYProgress,
     [0.2, 0.5, 0.74, 0.76],
-    [90, -150, 50, 50]
+    [40, -100, 50, 50]
   );
   const ticketX = useTransform(
     scrollYProgress,
@@ -48,46 +58,18 @@ export default function ScrollGiftReveal({ onFlip }: any) {
     [-50, -50, -40]
   );
   const ticketOpacity = useTransform(scrollYProgress, [0.3, 0.35], [-1, 1]);
-
-  // Ticket grows fullscreen (70–100% scroll)
   const ticketScale = useTransform(scrollYProgress, [0.63, 0.8], [0.1, 1.2]);
 
   return (
     <div ref={ref} className="h-[400vh]">
       {/* Sticky container */}
       <div className="sticky top-0 h-screen flex items-center flex-col justify-center">
-        {/* Snow effect */}
         <div className="pointer-events-none absolute inset-0">
-          {Array.from({ length: 60 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute bg-white rounded-full opacity-80 animate-fall"
-              style={{
-                width: Math.random() * 4 + 2 + "px",
-                height: Math.random() * 4 + 2 + "px",
-                top: -10,
-                left: Math.random() * 100 + "%",
-                animationDuration: Math.random() * 3 + 2 + "s",
-                animationDelay: Math.random() * 5 + "s",
-              }}
-            ></div>
-          ))}
-          <Text text="Just for you Han 🤍" />
+          <Stars />
+          <SnowFall isVisible={enableSnow} />
         </div>
-        <div className="relative w-64 h-64 flex items-center justify-center ml-20">
-          {/* Ticket */}
-          {/* <motion.img
-            src={ticket}
-            alt="ticket"
-            className="absolute z-20"
-            style={{
-              y: ticketY,
-              x: ticketX,
-              opacity: ticketOpacity,
-              scale: ticketScale,
-            }}
-          /> */}
 
+        <div className="relative w-64 h-64 flex items-center justify-center ml-20 -mt-30">
           <motion.div
             className="absolute z-20"
             children={<FlipCard onFlip={getIsFlipped} />}
@@ -113,20 +95,20 @@ export default function ScrollGiftReveal({ onFlip }: any) {
               marginRight: 108,
               marginBottom: 11,
               rotateZ: 5,
-              opacity: useTransform(scrollYProgress, [0.2, 0.26], [4, 0]), // fade away when opening
+              opacity: useTransform(scrollYProgress, [0.2, 0.26], [4, 0]),
             }}
           />
 
-          {/* Box open */}
+          {/* Box partially opened */}
           <motion.img
             src={boxOpen}
             alt="box open"
             className="absolute z-10"
             style={{
-              opacity: openProgress, // fades in as scroll progresses
+              opacity: openProgress,
             }}
           />
-          {/* Box fully open */}
+          {/* Box fully opened */}
           <motion.img
             src={boxFullOpen}
             alt="box open"
@@ -136,7 +118,7 @@ export default function ScrollGiftReveal({ onFlip }: any) {
               marginRight: 30,
               height: "122px",
               width: "235px",
-              opacity: openProgressFullOpen, // fades in as scroll progresses
+              opacity: openProgressFullOpen,
             }}
           />
         </div>

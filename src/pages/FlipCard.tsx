@@ -66,7 +66,7 @@ export default function FlipCard({ onFlip }: any) {
 
         {/* Flipping Card */}
         <motion.div
-          className="w-full h-full "
+          className="w-full h-full"
           style={{ transformStyle: "preserve-3d" }}
           animate={{ rotateY: flipped ? 180 : 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
