@@ -55,3 +55,32 @@ body {
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
+.perspective {
+  perspective: 1200px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* 🍫 Willy Wonka–style metallic gold gradient */
+.golden-ticket {
+  background: linear-gradient(
+    135deg,
+    #b68e2a,
+    #f7e8b4,
+    #d4a32d,
+    #f7e8b4,
+    #b68e2a
+  );
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 20px rgba(255, 200, 80, 0.5),
+    inset 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* optional embossed text effect */
+.golden-ticket h3,
+.golden-ticket p {
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}

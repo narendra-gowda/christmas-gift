@@ -74,10 +74,11 @@ export default function FlipCard({ onFlip }: any) {
           transition={{ duration: 0.8, ease: "easeInOut" }}
         >
           <motion.div
-            className={`w-full h-full rounded-2xl shadow-2xl bg-[linear-gradient(135deg,#b9935a,#f5ecd7,#d4af37,#a67834,#f5ecd7,#b9935a)] text-center p-4 flex flex-col items-center justify-center absolute backface-hidden`}
+            style={{ color: "#845f03ff" }}
+            className={`w-full h-full rounded-2xl shadow-2xl golden-ticket text-center p-4 pt-10 flex flex-col items-center justify-start gap-10 absolute backface-hidden`}
           >
             <motion.div
-              className="text-xl font-bold text-amber-900"
+              className="text-xl font-extrabold drop-shadow-md"
               initial={{ y: -10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}
@@ -85,28 +86,26 @@ export default function FlipCard({ onFlip }: any) {
               You, me, and a night of music
             </motion.div>
             {/* Small musical notes */}
-            <div className="flex gap-2 mt-4 text-xl justify-center">
+            <div className="flex gap-2 text-xl justify-center">
               {notes.map((note, i) => (
                 <motion.div
                   key={i}
-                  animate={{ y: [0, -8, 0] }}
+                  animate={{ scale: [1, 1.3, 1] }} // 🔥 zoom in → zoom out
                   transition={{
                     repeat: Infinity,
-                    duration: 0.9,
+                    duration: 1.5,
                     ease: "easeInOut",
-                    delay: i * 0.5, // ← stagger wave effect
+                    delay: i * 0.4, // staggered wave effect
                   }}
                 >
                   {note}
                 </motion.div>
               ))}
             </div>
-            <span className="text-base m-10">
-              Can you guess where? {isFullView}
-            </span>
+            <span className="text-base">Can you guess where? {isFullView}</span>
             {isFullView ? (
-              <span className="text-xs absolute bottom-5">
-                flip to find out!
+              <span className="text-xs absolute bottom-5 text-zinc-600">
+                flip over to find out
               </span>
             ) : null}
           </motion.div>
