@@ -1,73 +1,89 @@
-# React + TypeScript + Vite
+# 🎁 Christmas Gift
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive, scroll-driven Christmas gift reveal built with React, Three.js, and Framer Motion. Scroll to unwrap a present, reveal a concert ticket, swipe to flip it open — and enjoy confetti, snow, an aurora backdrop, and a festive soundtrack along the way.
 
-Currently, two official plugins are available:
+The gift in this build is a pair of tickets to **The Holiday in Concert** at **Bradford Live** (19th Dec, 7:30 pm).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+- **Scroll gift reveal** — a wrapped box shakes, opens, and reveals a ticket as you scroll.
+- **Swipe-to-flip card** — drag the ticket to flip it and unveil the details.
+- **Confetti & music** — flipping the card fires confetti and plays the holiday theme.
+- **Ambient effects** — animated aurora background, falling snow, and a starfield.
+- **Details section** — event, venue (with a Google Maps link), date, time, and ticket link.
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/) (with the SWC React plugin)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/) — scroll and gesture animations
+- [Three.js](https://threejs.org/) via [@react-three/fiber](https://github.com/pmndrs/react-three-fiber) & [drei](https://github.com/pmndrs/drei) — background effects
+- [canvas-confetti](https://github.com/catdad/canvas-confetti) — confetti burst
+- [react-icons](https://react-icons.github.io/react-icons/)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- [Node.js](https://nodejs.org/) 18+ and npm
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+Then open the URL Vite prints (default [http://localhost:5173](http://localhost:5173)). The dev server runs with `--host`, so it's also reachable from other devices on your network.
+
+### Build
+
+```bash
+npm run build
+```
+
+The production build is output to `dist/`. Preview it locally with:
+
+```bash
+npm run preview
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── App.tsx                  # Root — composes the reveal and details sections
+├── main.tsx                 # React entry point
+├── pages/
+│   ├── ScrollGiftReveal.tsx # Scroll-driven box-opening + ticket animation
+│   ├── FlipCard.tsx         # Swipe-to-flip ticket, confetti, and music
+│   └── BottomSection.tsx    # Event details (venue, date, time, links)
+├── components/
+│   ├── Aurora.tsx           # Animated aurora background wrapper
+│   ├── SnowFall.tsx         # Falling snow effect
+│   ├── Stars.tsx            # Starfield
+│   └── SwipeHint.tsx        # Hint prompting the user to swipe
+└── assets/                  # Gift box and ticket images
+public/
+└── the-holiday-theme.mp3    # Soundtrack played on card flip
+```
+
+## 🎨 Customizing the Gift
+
+To repurpose this for your own gift:
+
+- Update the event details in [src/pages/BottomSection.tsx](src/pages/BottomSection.tsx) (event, venue, date, time, and links).
+- Replace `public/the-holiday-theme.mp3` with your own track.
+- Swap the ticket and box artwork in [src/assets/](src/assets/).
