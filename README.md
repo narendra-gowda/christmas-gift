@@ -54,12 +54,6 @@ The production build is output to `dist/`. Preview it locally with:
 npm run preview
 ```
 
-### Lint
-
-```bash
-npm run lint
-```
-
 ## 📁 Project Structure
 
 ```
